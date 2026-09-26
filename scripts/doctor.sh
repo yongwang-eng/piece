@@ -17,7 +17,9 @@ node -e 'require("node:sqlite")' 2>/dev/null && ok "node $(node -v) has node:sql
 [ -f "$HOME/.pi/agent/auth.json" ] || [ -f "$HOME/.pi/agent/models-store.json" ] && ok "a provider is logged in" || warn "no provider yet — run pi, then /login"
 
 say "state (agent/state is runtime only, never committed)"
-for d in state state/live state/pubsub state/session-leases; do [ -d "$AGENT/$d" ] && ok "$d/" || bad "$d/ missing — run scripts/setup.sh"; done
+for d in state state/pubsub workers/runs; do [ -d "$AGENT/$d" ] && ok "$d/" || bad "$d/ missing — run scripts/setup.sh"; done
+bp=$(node -e "console.log(require('$AGENT/config/browser_profiles.json').root.replace(/^~/, process.env.HOME))" 2>/dev/null); [ -d "$bp" ] && ok "browser profiles root $bp" || warn "browser profiles root $bp not yet — created on first browser use"
+for d in state/live state/session-leases; do [ -d "$AGENT/$d" ] && ok "$d/ (created by the first pi session)" || warn "$d/ not yet — appears after the first pi session"; done
 if [ -f "$AGENT/state/agent.sqlite" ]; then
   n=$(q "select count(*) as n from sqlite_master where type='table'")
   [ "${n:-0}" -ge 11 ] && ok "agent.sqlite · $n tables" || bad "agent.sqlite has ${n:-0} tables (expected ≥ 11) — node scripts/schema-check.mjs agent"
