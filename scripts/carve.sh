@@ -8,7 +8,7 @@
 set -euo pipefail
 SRC=${PIECE_SRC:-$HOME/.pi}; DST=$(cd "$(dirname "$0")/.." && pwd)
 REF=$(git -C "$SRC" rev-parse --verify "${1:-HEAD}^{commit}")
-OWN='^(README\.md|LICENSE|scripts/.*|agent/AGENTS\.md|agent/settings\.json|agent/config/.*|agent/themes/.*|agent/profiles/.*\.md|\.gitignore)$'
+OWN='^(README\.md|LICENSE|DEVELOPMENT\.md|packages/pi-recall/README\.md|scripts/.*|agent/AGENTS\.md|agent/settings\.json|agent/config/.*|agent/themes/.*|agent/profiles/.*\.md|\.gitignore)$'
 DROP='^(agent/npm/\.gitignore$|agent/extensions/(inbox|pilab-hotlist)/|agent/skills/|agent/PI_DEVELOPMENT\.md|packages/pi-recall/evals/|agent/profiles/.*\.md$|packages/pi-recall/src/meetings\.rules\.json$)'
 TRANSFORM=${PIECE_TRANSFORM:-$HOME/.config/piece/transform.pl}
 STAMP="$DST/scripts/CARVED_FROM"

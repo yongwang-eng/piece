@@ -27,7 +27,8 @@ npm install -g @earendil-works/pi-coding-agent     # pi itself
 brew install tmux redis                            # workers live in tmux panes; redis is the crew transport (loopback only)
 git clone https://github.com/<you>/piece ~/.pi
 ~/.pi/scripts/setup.sh                             # deps · redis · state dirs · empty sqlite from the DDL · the suite
-tmux new -s pi 'pi'
+tmux new -s pi 'pi'                                # /login, one turn, /quit
+~/.pi/scripts/doctor.sh                            # proves it: tables · redis · "usage ledger: N model calls"
 ```
 
 Optional flags: `--with-recall` (semantic recall over past sessions — ~600 MB of models), `--with-browser` (Playwright
@@ -54,6 +55,10 @@ those files is an allowlist — what is not listed is refused.
 first, follow existing patterns, red before green, two questions bound every change, a list beats a judgement.
 
 ## Developing
+
+- **`DEVELOPMENT.md`** is the hands-off doc: the agent-facing install contract (what each config allowlist controls and
+  what refuses while it is empty), what is recorded where, conventions, the proof recipe, a kernel per area.
+- `scripts/doctor.sh` — verifies an install and, after one real turn, that the usage ledger is actually recording.
 
 - `scripts/test.sh` — the whole suite (`node --test`); every extension ships its regression tests beside it.
 - A change to anything on screen is proven in a sandbox pi in tmux before it is called done:

@@ -23,8 +23,8 @@ pi session ── model ──► recall(query, since?, k) · recall_show(key, l
 ## Ops
 ```bash
 node bin/recall-index.ts [--rebuild] [--no-embed] [--limit N]   # what launchd runs; ~3 s tail, ~24 ms per new chunk
-# schedule: row `com.me.pi-recall.index` in ~/lab/agent_scripts/launchd_jobs/jobs.json (every 300 s);
-#           `python3 jobs.py apply` installs it, `jobs.py logs com.me.pi-recall.index` tails ~/.pi/agent/state/recall/launchd.log
+# schedule: `scripts/setup.sh --with-recall` installs launchd job `piece.recall-index` (every 300 s, macOS);
+#           log: ~/.pi/agent/state/recall/launchd.log · elsewhere, cron the same command every 5 min
 npm test                                                          # node:test, fixtures in tmp, no model needed
 ```
 Rebuild ≈ 25 min for ~62 k chunks; the eval record (calls · provenance · shows · judgments) survives it. Model swap = change `MODEL_ID`, re-embed.

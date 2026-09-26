@@ -23,7 +23,27 @@ say "npm dependencies (pi-mcp-adapter, themes, crew store)"
 (cd "$AGENT/npm" && npm ci --silent)
 (cd "$AGENT/npm/crew" && npm ci --silent)
 (cd "$ROOT/packages/pi-pubsub" && npm ci --silent)
-[ $WITH_RECALL = 1 ]  && { say "pi-recall (semantic recall over past sessions)"; (cd "$ROOT/packages/pi-recall" && npm ci --silent); pi install "$ROOT/packages/pi-recall" >/dev/null && echo "  added to settings.packages"; }
+if [ $WITH_RECALL = 1 ]; then
+  say "pi-recall (semantic recall over past sessions)"
+  (cd "$ROOT/packages/pi-recall" && npm ci --silent)
+  pi install "$ROOT/packages/pi-recall" >/dev/null && echo "  added to settings.packages"
+  # the indexer runs every 5 min under launchd (macOS); the plist is rendered here, never hand-written
+  if [ "$(uname)" = Darwin ]; then
+    PL="$HOME/Library/LaunchAgents/piece.recall-index.plist"; mkdir -p "$(dirname "$PL")" "$AGENT/state/recall"
+    cat > "$PL" <<PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+  <key>Label</key><string>piece.recall-index</string>
+  <key>ProgramArguments</key><array><string>$(command -v node)</string><string>$ROOT/packages/pi-recall/bin/recall-index.ts</string></array>
+  <key>StartInterval</key><integer>300</integer>
+  <key>StandardOutPath</key><string>$AGENT/state/recall/launchd.log</string>
+  <key>StandardErrorPath</key><string>$AGENT/state/recall/launchd.log</string>
+</dict></plist>
+PLIST
+    launchctl bootout "gui/$(id -u)/piece.recall-index" 2>/dev/null; launchctl bootstrap "gui/$(id -u)" "$PL" && echo "  launchd: piece.recall-index every 300 s → state/recall/launchd.log"
+  else echo "  schedule yourself: node $ROOT/packages/pi-recall/bin/recall-index.ts every 5 min (cron)"; fi
+fi
 [ $WITH_BROWSER = 1 ] && (say "browser"; cd "$AGENT/npm/browser" && npm ci --silent && npx playwright install chromium)
 [ $WITH_CONSOLE = 1 ] && (say "crew console"; cd "$ROOT/apps/crew-console" && npm ci --silent && (cd web && npm ci --silent && npm run build))
 
@@ -49,3 +69,5 @@ say "suite"
 "$ROOT/scripts/test.sh"
 
 say "done — start pi in tmux. First run: pi asks for a provider login; set your own models in agent/settings.json."
+grep -q '@claude_dot' "$HOME/.tmux.conf" 2>/dev/null || { say "tmux status-line glyph (optional) — add to ~/.tmux.conf, then tmux source-file ~/.tmux.conf"; printf "  setw -g window-status-format '#I:#W#{@claude_dot}'\n  setw -g window-status-current-format '#[bold] #I:#W#{@claude_dot} '\n"; }
+echo; echo "next: scripts/doctor.sh — verifies the install and, after your first pi turn, that usage/telemetry are recording."
