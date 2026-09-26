@@ -1,0 +1,5 @@
+{
+  "//": "Devin handoffs: PRs it opens must be authored as authorEmail (the arrival check refuses others) and land on branchPrefix/<slug>. The API key is leased via secret-lease (config/secrets.json row `devin`).",
+  "authorEmail": "you@example.com",
+  "branchPrefix": "devin"
+}

@@ -1,0 +1,20 @@
+{
+  "//": "Browser identity profiles. A profile is a persistent Chrome profile dir a human logs into once; the agent only ever drives it. `hosts` picks a profile from the URLs in a task; `identities` are the names a caller may ask for. `pool: true` marks the anonymous scratch profiles — never log in there. Add a row per site you sign in to.",
+  "root": "~/.pi/agent/state/browser_profiles",
+  "scratchPoolSize": 3,
+  "profiles": [
+    {
+      "name": "github",
+      "identities": ["github"],
+      "hosts": ["github.com"],
+      "description": "Your GitHub login."
+    },
+    {
+      "name": "scratch",
+      "identities": [],
+      "hosts": [],
+      "pool": true,
+      "description": "Anonymous disposable browsing; never log in here."
+    }
+  ]
+}

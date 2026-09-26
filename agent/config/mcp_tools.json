@@ -1,0 +1,10 @@
+{
+  "_about": [
+    "Which MCP tools a crew WORKER may be granted, per server. Only READ tools are listed: an unlisted tool is a write and is",
+    "never granted (deny by absence). `crew_spawn needs:['<server>:read']` generates the allowlist from these rows; nothing spells",
+    "'the whole server', and the `mcp` / `mcpScript` / `mcp__<server>` gateways are never granted because they dispatch to any tool.",
+    "Adding a server or tool: list its bare name (before the adapter's `<server>_` prefix) under `read` ONLY if it cannot post, send,",
+    "create, edit, delete, save, or dispatch. Seed from your mcp-cache.json: mcp({ server })."
+  ],
+  "servers": {}
+}

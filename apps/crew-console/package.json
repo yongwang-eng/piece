@@ -1,0 +1,18 @@
+{
+  "name": "crew-console",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Loopback web UI for pi crews: every crew live and past, and the inbox where Yong answers human-tier consults (D69).",
+  "scripts": {
+    "start": "node src/server.ts",
+    "test": "node --test --test-timeout=15000 src/*.test.mjs",
+    "build:web": "cd web && npm run build"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "pi-small-tools",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Yong's small self-contained pi tools: /btw side questions, /awake caffeinate. Personal package, no sharing intent (D67).",
+  "type": "module",
+  "pi": {
+    "extensions": [
+      "./extensions/btw/index.ts",
+      "./extensions/awake/index.ts"
+    ]
+  },
+  "engines": {
+    "node": ">=22.19"
+  }
+}

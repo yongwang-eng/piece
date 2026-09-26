@@ -1,0 +1,41 @@
+{
+  "name": "pi-background-compact",
+  "version": "0.1.0",
+  "description": "Background context compaction for the pi coding agent — the summarizer rides the live prompt cache and runs in the background, so summarizing does not block the conversation.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Jane Doe",
+  "keywords": [
+    "pi-package",
+    "pi",
+    "pi-extension",
+    "pi-coding-agent",
+    "compaction",
+    "prompt-cache",
+    "context"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions/background-compact.ts"
+    ]
+  },
+  "scripts": {
+    "test": "node --test src/*.test.mjs",
+    "test:integration": "PI_BGC_REQUIRE_INTEGRATION=1 node --test --test-timeout=120000 src/wiring.test.mjs"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-ai": "*"
+  },
+  "files": [
+    "extensions",
+    "src",
+    "examples",
+    "README.md",
+    "LICENSE",
+    "!src/wiring.test.mjs"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  }
+}

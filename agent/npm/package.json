@@ -1,0 +1,8 @@
+{
+  "name": "pi-extensions",
+  "private": true,
+  "dependencies": {
+    "awesome-pi-themes": "^1.2.2",
+    "pi-mcp-adapter": "^2.34.0"
+  }
+}

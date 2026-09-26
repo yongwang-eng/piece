@@ -1,0 +1,71 @@
+# Allowlist repository: runtime state never enters version control. Everything is ignored unless listed below.
+*
+!.gitignore
+!README.md
+!LICENSE
+!scripts/
+!scripts/*
+
+# Agent configuration.
+!agent/
+!agent/AGENTS.md
+!agent/settings.json
+!agent/config/
+!agent/config/*.json
+!agent/config/redis.conf.template
+agent/config/redis.conf
+!agent/bin/
+!agent/bin/*.ts
+!agent/themes/
+!agent/themes/*.json
+
+# Extensions, shared libraries, worker profiles: source + tests only.
+!agent/extensions/
+!agent/extensions/**/
+!agent/extensions/**/*.ts
+!agent/extensions/**/*.mjs
+!agent/extensions/**/*.json
+!agent/extensions/**/*.md
+!agent/extensions/**/LICENSE
+!agent/lib/
+!agent/lib/**/
+!agent/lib/**/*.ts
+!agent/lib/**/*.mjs
+!agent/lib/**/*.md
+!agent/profiles/
+!agent/profiles/**
+!agent/scripts/
+!agent/scripts/*.mjs
+!agent/workers/
+!agent/workers/constitution.md
+
+# Dependency declarations only; never installed packages.
+!agent/npm/
+!agent/npm/package.json
+!agent/npm/package-lock.json
+!agent/npm/browser/
+!agent/npm/browser/package.json
+!agent/npm/browser/package-lock.json
+!agent/npm/crew/
+!agent/npm/crew/package.json
+!agent/npm/crew/package-lock.json
+
+# Local pi packages and standalone apps.
+!packages/
+!packages/**/
+!packages/**/*
+packages/**/node_modules/
+!apps/
+!apps/**/
+!apps/**/*
+apps/**/node_modules/
+apps/**/dist/
+apps/**/package-lock.json
+
+# Runtime state — belt and braces over the `*` rule.
+agent/state/
+agent/workers/runs/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+node_modules/

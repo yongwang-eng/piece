@@ -1,0 +1,52 @@
+{
+  "extensions": [
+    "-extensions/todo/index.ts",
+    "-extensions/main-guard/index.ts"
+  ],
+  "theme": "piece-quiet",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-fable-5-1",
+  "defaultThinkingLevel": "xhigh",
+  "tuiMode": "fullscreen",
+  "editorPaddingX": 1,
+  "packages": [
+    "npm:pi-mcp-adapter",
+    {
+      "source": "npm:awesome-pi-themes@1.2.2",
+      "extensions": []
+    },
+    "../packages/pi-background-compact",
+    "../packages/pi-small-tools"
+  ],
+  "hideThinkingBlock": false,
+  "showHardwareCursor": true,
+  "steeringMode": "all",
+  "followUpMode": "all",
+  "defaultProjectTrust": "ask",
+  "treeFilterMode": "default",
+  "warnings": {
+    "anthropicExtraUsage": false
+  },
+  "retry": {
+    "provider": {
+      "timeoutMs": 240000,
+      "maxRetries": 1
+    }
+  },
+  "crew": {
+    "governorModel": "anthropic/claude-sonnet-5",
+    "defaultModel": "anthropic/claude-fable-5-1",
+    "failoverModels": [
+      "anthropic/claude-fable-5-1",
+      "anthropic/claude-sonnet-5"
+    ]
+  },
+  "quietStartup": true,
+  "compaction": {
+    "keepRecentTokens": 20000,
+    "enabled": true
+  },
+  "backgroundCompact": {
+    "notify": false
+  }
+}

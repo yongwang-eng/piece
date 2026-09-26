@@ -1,0 +1,29 @@
+{
+  "//": "Two-key consults (D73). A row here says an ACT SHAPE is MISTAKE-class: if it went wrong someone would notice and fix it. For such an act, main + governor both approving settles the consult without waking the owner, who gets a 'Decided for you' note with a veto. ANYTHING NOT LISTED IS INCIDENT-CLASS AND REACHES THE OWNER — absence is the deny.",
+  "//matching": "`verb` and `target` are regexes on the worker's submitted action (case-insensitive). `repo: own` requires the worker's cwd to classify as `own` in repos.json. `unless` is a regex over verb+target+detail+question: a hit disqualifies the row. `${cwd}` in `target` expands to the worker's worktree. Every row must carry a `why` — a rule without its reason is dropped at load.",
+  "rows": [
+    {
+      "verb": "^(git )?push$",
+      "repo": "own",
+      "unless": "force|(^|\\s)-f(\\s|$)|(^|\\s)\\+[\\w./:-]+|rebase|reset --hard|--delete|(^|\\s):[\\w./-]+|--mirror",
+      "why": "pushes to my own repos are encouraged; the rule is no force push, no rebase — preserve git history"
+    },
+    {
+      "verb": "^(delete|rm|remove|unlink)$",
+      "target": "^(/private)?/tmp/[^\\s]+$",
+      "unless": "\\.\\.",
+      "why": "scratch under /tmp is nobody's record"
+    },
+    {
+      "verb": "^(delete|rm|remove|unlink)$",
+      "target": "^${cwd}/[^\\s]+$",
+      "unless": "\\.\\.",
+      "why": "a file inside the worker's own worktree is recoverable from git or was never committed by anyone else"
+    },
+    {
+      "verb": "^(create branch|branch|checkout -b|switch -c)$",
+      "repo": "own",
+      "why": "a local branch is a name; deleting it later is one command"
+    }
+  ]
+}

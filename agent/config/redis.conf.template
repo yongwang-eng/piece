@@ -1,0 +1,12 @@
+bind 127.0.0.1
+protected-mode yes
+port 16379
+tls-port 0
+cluster-enabled no
+save ""
+appendonly no
+daemonize yes
+pidfile __STATE__/redis.pid
+logfile __STATE__/redis.log
+dir __STATE__
+aclfile __ACL__

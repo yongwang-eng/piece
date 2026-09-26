@@ -1,0 +1,24 @@
+{
+  "//": "Repo registry — the DETERMINISTIC source of truth for what a crew may do with git. Anything not listed is `unknown` and main ASKS rather than assuming.",
+  "//matching": "remote (org/name, `*` allowed in either half) is tried first; `path` (prefix, ~ expanded) second. First match wins, so put specific entries above wildcards.",
+  "//worktrees": "A worktree shares its source repo's class automatically: `git remote get-url origin` returns the SAME remote inside a worktree.",
+  "repos": [
+    {
+      "remote": "<your-github-user>/*",
+      "class": "own",
+      "why": "your own repos — nobody else is affected; a signed-off crew merge is pre-authorized",
+      "merge": "crew_merge",
+      "autoReviewers": [],
+      "draftBlocksReview": false,
+      "worktrees": "~/git_repos/wt-pi-<slug>"
+    },
+    {
+      "remote": "<some-org>/*",
+      "class": "shared",
+      "why": "other people work here; review and merge are theirs — nothing merges or pushes from a crew",
+      "merge": "github",
+      "autoReviewers": [],
+      "draftBlocksReview": false
+    }
+  ]
+}

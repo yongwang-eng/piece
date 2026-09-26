@@ -1,0 +1,6 @@
+{
+  "host": "127.0.0.1",
+  "port": 16379,
+  "passwordEnv": "REDISCLI_AUTH",
+  "passwordFile": "~/.config/claude/pi-pubsub.env"
+}

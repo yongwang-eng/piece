@@ -1,0 +1,5 @@
+# generic markers — safe to ship; one extended regex per line
+sk_live_[A-Za-z0-9]
+AKIA[0-9A-Z]{16}
+-----BEGIN [A-Z ]*PRIVATE KEY
+enterprise\.slack\.com

@@ -1,0 +1,1 @@
+{"name":"pi-crew-store","private":true,"type":"module","dependencies":{"drizzle-orm":"1.0.0-rc.4"},"devDependencies":{"drizzle-kit":"1.0.0-rc.4"}}

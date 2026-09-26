@@ -1,0 +1,45 @@
+{
+  "_about": [
+    "Which MCP tools a crew WORKER may be granted, per server. Only READ tools are listed: an unlisted tool is a write and is",
+    "never granted (deny by absence). `crew_spawn needs:['<server>:read']` generates the allowlist from these rows; nothing spells",
+    "'the whole server', and the `mcp` / `mcpScript` / `mcp__<server>` gateways are never granted because they dispatch to any tool.",
+    "Adding a server or tool: list its bare name (before the adapter's `<server>_` prefix) under `read` ONLY if it cannot post, send,",
+    "create, edit, delete, save, or dispatch. hubmcp `call_*_mcp` are dispatchers to other servers — gateways, not reads.",
+    "Seeded 2026-09-16 from ~/.pi/agent/mcp-cache.json (notion 44 · slack 19 · hubmcp 50 · granola 6). Refresh: mcp({ server })."
+  ],
+  "servers": {
+    "notion": {
+      "read": [
+        "notion-search", "notion-ai-search", "notion-fetch", "notion-get-comments", "notion-get-users", "notion-get-teams",
+        "notion-query-data-sources", "notion-query-multiple-data-sources", "notion-query-meeting-notes",
+        "notion-download-attachment", "notion-download-skill", "notion-search-skills", "notion-get-async-task",
+        "notion-list-private-pages", "notion-list-shared-pages", "notion-list-recent-pages", "notion-list-favorite-pages",
+        "notion-query-sessions", "notion-search-sessions", "notion-search-agents", "notion-get-session-status",
+        "notion-list-session-events", "notion-read-session-event",
+        "notion-check-mcp-next-steps", "notion-show-advanced-analysis-next-steps",
+        "read_writing_effective_skills_for_notion_mcp", "read_enhanced_markdown_specification", "read_view_configuration_dsl",
+        "read_when_to_create_a_notion_page_or_database", "read_query_multiple_data_sources_full_version_card", "read_notion_mcp_full_version_card"
+      ]
+    },
+    "slack": {
+      "read": [
+        "slack_search_public", "slack_search_public_and_private", "slack_search_channels", "slack_search_users", "slack_search_emojis",
+        "slack_read_channel", "slack_read_thread", "slack_read_canvas", "slack_read_file", "slack_read_user_profile",
+        "slack_get_reactions", "slack_list_channel_members", "slack_list_user_channels"
+      ]
+    },
+    "hubmcp": {
+      "read": [
+        "whoami", "query_snowflake", "search_datadog_logs", "get_sentry_issue", "check_service_status",
+        "get_project_state", "list_active_agents", "memory_recall", "memory_list",
+        "list_data_guides_tools", "call_data_guides_mcp"
+      ],
+      "_note": "call_data_guides_mcp is the ONE call_* dispatcher listed: its server exposes exactly two docs tools (get_snowflake_query_instructions, get_data_engineering_guide; listed 2026-09-16) and HubMCP requires it before any Snowflake query. Every other call_*_mcp (incident.io, Cloudflare, browser, Firecrawl, Exa, Flashboard, Parallel) and call_integration_api (any provider's REST, incl. Slack sends and Notion creates) stay absent. Linear has no HubMCP read tool — workers use the read-only Linear key via curl (see profiles/researcher)."
+    },
+    "granola": {
+      "read": [
+        "get_account_info", "get_meetings", "list_meetings", "list_meeting_folders", "get_meeting_transcript", "query_granola_meetings"
+      ]
+    }
+  }
+}

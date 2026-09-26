@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+/*
+  crew-console theme — ported from work_hub's "command-deck" token system (oklch, warm paper, faint grid, mono for
+  data), with the console's own accent: TERRACOTTA (`--signal`) — the one colour that means "needs you".
+  Light only, like work_hub. Semantic set: ok · warn · info · neutral (+ destructive).
+*/
+:root {
+  --radius: 0.5rem;
+
+  --background: oklch(0.985 0.006 85);        /* warm paper */
+  --foreground: oklch(0.24 0.02 264);         /* ink — cool near-black */
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.24 0.02 264);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.24 0.02 264);
+
+  /* Terracotta signal — the console's brand and the single "needs you" colour. Also the primary button. */
+  --signal: oklch(0.6 0.15 40);
+  --signal-foreground: oklch(0.99 0.01 85);
+  --primary: var(--signal);
+  --primary-foreground: var(--signal-foreground);
+
+  --secondary: oklch(0.95 0.008 85);
+  --secondary-foreground: oklch(0.3 0.02 264);
+  --muted: oklch(0.95 0.008 85);
+  --muted-foreground: oklch(0.5 0.02 258);
+  --accent: oklch(0.93 0.012 80);
+  --accent-foreground: oklch(0.3 0.02 264);
+
+  --destructive: oklch(0.58 0.21 25);
+
+  --border: oklch(0.24 0.02 264 / 11%);
+  --input: oklch(0.24 0.02 264 / 16%);
+  --ring: oklch(0.6 0.15 40 / 55%);
+
+  /* Semantic status accents (mid-tone so they read on light cards). */
+  --ok: oklch(0.55 0.14 158);       /* emerald — answered / reported / merged */
+  --warn: oklch(0.62 0.15 66);      /* amber — stalled, degraded, waiting on a reply */
+  --info: oklch(0.55 0.14 240);     /* sky — working / present */
+  --neutral: oklch(0.5 0.015 258);  /* zinc — idle / left / ended */
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-signal: var(--signal);
+  --color-signal-foreground: var(--signal-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-info: var(--info);
+  --color-neutral: var(--neutral);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    color-scheme: light;
+  }
+  body {
+    @apply bg-background text-foreground font-sans text-[13px] leading-[1.45];
+    margin: 0;
+    /* Faint cockpit grid + a warm terracotta wash in the top-left for depth (work_hub's body, recoloured). */
+    background-image:
+      radial-gradient(120% 80% at 0% 0%, oklch(0.6 0.15 40 / 7%) 0%, transparent 45%),
+      linear-gradient(to right, oklch(0.24 0.02 264 / 4%) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(0.24 0.02 264 / 4%) 1px, transparent 1px);
+    background-size:
+      100% 100%,
+      44px 44px,
+      44px 44px;
+  }
+
+  /* Thin, theme-tinted scrollbars. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(0.24 0.02 264 / 18%) transparent;
+  }
+
+  kbd, code {
+    @apply font-mono text-[12px];
+  }
+}
+
+/* --- motion: meaning only --- */
+.live-dot { animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+.fade-in { animation: fade 200ms ease-out; }
+@keyframes fade { from { opacity: 0; transform: translateY(2px); } to { opacity: 1; transform: none; } }
+
+/* a consult card that was just answered: a green wash that fades to the card colour */
+.settled { animation: settle 700ms ease-out; }
+@keyframes settle { 0% { background-color: oklch(0.55 0.14 158 / 14%); } 100% { background-color: var(--card); } }
+
+/* translucent sticky toolbar over the paper */
+.toolbar {
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  background: oklch(0.985 0.006 85 / 78%);
+}
